@@ -4,7 +4,6 @@ function! vim1cache#AddMemo() abort
   "TODO filename can be configured
   let l:filename = s:dir . "/" . strftime("%Y%m%d_%H%M%S") . ".md"
 
-  "TODO touch command may not be suitable
   exe("edit " . l:filename)
 endfunction
 
