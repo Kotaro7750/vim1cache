@@ -53,7 +53,7 @@ function! vim1cache#ToggleDailyMemo() abort
   else
     if l:memo_buf == -1
       execute("e " . s:dir . "/" . s:daily_memo)
-      setfiletype vim1cacheDaily
+      setfiletype changelog
     else
       execute('buffer ' . l:memo_buf)
     endif
@@ -101,7 +101,6 @@ function! vim1cache#WhenNewDay() abort
   endif
 endfunction
 
-
 function! vim1cache#NewEntry() abort
-  :call feedkeys("1Go	* [")
+  :call feedkeys("1Go	* ")
 endfunction
