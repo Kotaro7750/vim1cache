@@ -1,5 +1,6 @@
 let s:dir = get(g:, 'vim1cache_dir', expand('~/vim1cache'))
 let s:entry_dir = s:dir . '/' . get(g:, 'vim1cache_entry_dir', 'entry')
+let s:entry_path_suffix = get(g:, 'vim1cache_entry_path_suffix', 'vim1cache-entry:')
 let s:daily_memo = get(g:,'vim1cache_daily_memo', 'Changelog.md')
 let s:username = get(g:,'vim1cache_username', 'vim1cache')
 let s:email = get(g:,'vim1cache_email', 'vim1cache@example.com')
@@ -38,6 +39,23 @@ function! vim1cache#ListMemo() abort
   endfor
   call setqflist(l:qf,'r')
   cwindow
+endfunction
+
+function! vim1cache#OpenMemoUnderCursor() abort
+  let l:word = expand("<cWORD>")
+  let l:matched = matchstr(l:word,s:entry_path_suffix.".*\.md")
+  if l:matched ==? ""
+    return
+  endif
+
+  let l:filename = split(matched,s:entry_path_suffix)[0]
+  let l:file_path = s:entry_dir . "/" . l:filename
+
+  if filereadable(l:file_path)
+    exe("edit " . l:file_path)
+  else
+    echo l:file_path . " does not exist"
+  endif
 endfunction
 
 function! vim1cache#ToggleDailyMemo() abort
